@@ -24,10 +24,15 @@ public class AudioMaster {
         }
     }
 
-    public static int loadSound(String file) throws FileNotFoundException {
+    public static int loadSound(String file){
         int buffer = AL10.alGenBuffers();
         buffers.add(buffer);
-        BufferedInputStream is = new BufferedInputStream(new FileInputStream(file));
+        BufferedInputStream is = null;
+        try {
+            is = new BufferedInputStream(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         WaveData waveFile = WaveData.create(is);
         AL10.alBufferData(buffer, waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();

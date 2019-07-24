@@ -1,5 +1,7 @@
 package engineTester;
 
+import audio.AudioMaster;
+import audio.Source;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -12,6 +14,7 @@ import font.fontMeshCreator.GUIText;
 import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 import renderEngine.models.TexturedModel;
 import org.lwjgl.opengl.Display;
@@ -46,6 +49,20 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
         Random random = new Random(12345);
+
+        //*****AUDIO*****
+
+        AudioMaster.init();
+        AudioMaster.setListenerData(0 ,0, 0);
+        //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
+
+        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.wav");
+        Source source = new Source();
+
+        float xPos = 0;
+        source.setPosition(xPos, 0, 0);
+
+        //***************
 
         //*****TEXT*****
 
@@ -246,6 +263,10 @@ public class MainGameLoop {
             guiRenderer.render(guis);
             TextMaster.render();
 
+            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
+                source.play(bounceSound);
+            }
+
             DisplayManager.updateDisplay();
             dayTracker.tick();
         }
@@ -263,6 +284,8 @@ public class MainGameLoop {
         renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
+        source.delete();
+        AudioMaster.cleanUp();
 
         //*******************
 
