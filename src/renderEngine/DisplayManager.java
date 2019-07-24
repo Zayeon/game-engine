@@ -23,8 +23,9 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setTitle("Test");
 			
-			Display.create(new PixelFormat().withDepthBits(24), attribs);
-		} catch (LWJGLException e) {
+			Display.create(new PixelFormat().withDepthBits(24).withSamples(4), attribs);
+            GL11.glEnable(GL13.GL_MULTISAMPLE);
+        } catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		
