@@ -1,9 +1,8 @@
 package entities.water;
 
-import java.nio.ByteBuffer;
-
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.*;
+
+import java.nio.ByteBuffer;
 
 public class WaterFrameBuffers {
 

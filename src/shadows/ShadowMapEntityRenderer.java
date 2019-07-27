@@ -1,19 +1,18 @@
 package shadows;
 
-import java.util.List;
-import java.util.Map;
-
+import entities.Entity;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-
-import entities.Entity;
 import renderEngine.MasterRenderer;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import toolbox.Maths;
+
+import java.util.List;
+import java.util.Map;
 
 public class ShadowMapEntityRenderer {
 

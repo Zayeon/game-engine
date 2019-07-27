@@ -12,8 +12,8 @@ import java.util.List;
 
 public class StaticShader extends ShaderProgram{
 
-    private static final String VERTEX_FILE = "src/renderEngine/shaders/vertexShader.txt";
-    private static final String FRAGMENT_FILE = "src/renderEngine/shaders/fragmentShader.txt";
+    private static final String VERTEX_FILE = "/renderEngine/shaders/vertexShader.txt";
+    private static final String FRAGMENT_FILE = "/renderEngine/shaders/fragmentShader.txt";
 
     private static final int MAX_LIGHTS = 4;
 

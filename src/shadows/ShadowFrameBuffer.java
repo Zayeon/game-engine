@@ -1,13 +1,8 @@
 package shadows;
 
-import java.nio.ByteBuffer;
+import org.lwjgl.opengl.*;
 
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GL32;
+import java.nio.ByteBuffer;
 
 /**
  * The frame buffer for the shadow pass. This class sets up the depth texture

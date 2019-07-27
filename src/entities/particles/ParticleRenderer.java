@@ -3,10 +3,10 @@ package entities.particles;
 import entities.Camera;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.vector.Vector3f;
-import renderEngine.models.RawModel;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
+import renderEngine.models.RawModel;
 import toolbox.Maths;
 
 import java.nio.FloatBuffer;

@@ -1,9 +1,7 @@
 package entities.skybox;
 
-import org.lwjgl.util.vector.Matrix4f;
-
 import entities.Camera;
-
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.shaders.ShaderProgram;
@@ -11,8 +9,8 @@ import toolbox.Maths;
 
 public class SkyboxShader extends ShaderProgram{
 
-    private static final String VERTEX_FILE = "src/entities/skybox/skyboxVertexShader.txt";
-    private static final String FRAGMENT_FILE = "src/entities/skybox/skyboxFragmentShader.txt";
+    private static final String VERTEX_FILE = "/entities/skybox/skyboxVertexShader.txt";
+    private static final String FRAGMENT_FILE = "/entities/skybox/skyboxFragmentShader.txt";
 
     private static final float ROTATE_SPEED = 1f;
 

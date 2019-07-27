@@ -1,17 +1,16 @@
 package shadows;
 
-import java.util.List;
-import java.util.Map;
-
+import entities.Camera;
+import entities.Entity;
+import entities.Light;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-
-import entities.Camera;
-import entities.Entity;
-import entities.Light;
 import renderEngine.models.TexturedModel;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is in charge of using all of the classes in the shadows package to

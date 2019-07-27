@@ -9,14 +9,18 @@ import entities.Player;
 import entities.particles.ParticleMaster;
 import entities.particles.ParticleSystem;
 import entities.particles.ParticleTexture;
+import entities.terrains.Terrain;
+import entities.terrains.TerrainTexture;
+import entities.terrains.TerrainTexturePack;
+import entities.water.WaterFrameBuffers;
+import entities.water.WaterRenderer;
+import entities.water.WaterShader;
+import entities.water.WaterTile;
 import font.fontMeshCreator.FontType;
-import font.fontMeshCreator.GUIText;
 import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector2f;
-import renderEngine.models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -26,16 +30,10 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import renderEngine.OBJLoader;
-import entities.terrains.Terrain;
 import renderEngine.models.ModelTexture;
-import entities.terrains.TerrainTexture;
-import entities.terrains.TerrainTexturePack;
+import renderEngine.models.TexturedModel;
 import toolbox.DayTracker;
 import toolbox.MousePicker;
-import entities.water.WaterFrameBuffers;
-import entities.water.WaterRenderer;
-import entities.water.WaterShader;
-import entities.water.WaterTile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -68,8 +66,8 @@ public class MainGameLoop {
 
         TextMaster.init(loader);
         FontType font = new FontType(loader.loadFontTexture("candara"), new File("res/font/candara.fnt"));
-        GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
-        text.setColour(1, 0, 1);
+        //GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
+        //text.setColour(1, 0, 1);
 
         //**************
 

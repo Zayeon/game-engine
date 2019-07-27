@@ -1,17 +1,11 @@
 package entities.particles;
 
-import org.lwjgl.util.vector.Vector3f;
-
-import renderEngine.DisplayManager;
-
-
-import java.util.Random;
-
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-
 import renderEngine.DisplayManager;
+
+import java.util.Random;
 
 public class ParticleSystem {
 

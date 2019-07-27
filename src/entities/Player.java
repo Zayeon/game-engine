@@ -1,10 +1,10 @@
 package entities;
 
-import renderEngine.models.TexturedModel;
+import entities.terrains.Terrain;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
-import entities.terrains.Terrain;
+import renderEngine.models.TexturedModel;
 
 public class Player extends Entity {
 

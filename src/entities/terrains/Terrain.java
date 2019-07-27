@@ -1,16 +1,10 @@
 package entities.terrains;
 
-import renderEngine.models.RawModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
+import renderEngine.models.RawModel;
 import toolbox.Maths;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
 public class Terrain {
 

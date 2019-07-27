@@ -1,13 +1,13 @@
 package toolbox;
 
 import entities.Camera;
+import entities.terrains.Terrain;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-import entities.terrains.Terrain;
 
 public class MousePicker {
 

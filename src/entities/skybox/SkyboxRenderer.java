@@ -1,13 +1,13 @@
 package entities.skybox;
 
 import entities.Camera;
-import renderEngine.models.RawModel;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import renderEngine.Loader;
+import renderEngine.models.RawModel;
 
 public class SkyboxRenderer {
 

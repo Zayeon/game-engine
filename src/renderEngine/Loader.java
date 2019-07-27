@@ -1,12 +1,11 @@
 package renderEngine;
 
-import org.lwjgl.Sys;
-import renderEngine.models.RawModel;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+import renderEngine.models.RawModel;
 
 import java.io.FileInputStream;
 import java.io.IOException;

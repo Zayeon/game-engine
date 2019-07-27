@@ -1,8 +1,8 @@
 package renderEngine;
 
-import renderEngine.models.RawModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.models.RawModel;
 
 import java.io.BufferedReader;
 import java.io.File;

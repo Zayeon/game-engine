@@ -1,19 +1,18 @@
 package renderEngine;
 
-import com.sun.xml.internal.ws.server.EndpointAwareTube;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import org.lwjgl.opengl.GL13;
-import renderEngine.models.TexturedModel;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
-import renderEngine.shaders.StaticShader;
-import renderEngine.shaders.TerrainShader;
 import entities.skybox.SkyboxRenderer;
 import entities.terrains.Terrain;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
+import renderEngine.models.TexturedModel;
+import renderEngine.shaders.StaticShader;
+import renderEngine.shaders.TerrainShader;
 import shadows.ShadowMapMasterRenderer;
 import toolbox.DayTracker;
 
