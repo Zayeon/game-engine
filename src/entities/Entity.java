@@ -10,6 +10,8 @@ public class Entity {
     private float rotX, rotY, rotZ;
     private float scale;
 
+    private boolean collidable;
+
     private int textureIndex = 0;
 
     public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
@@ -100,5 +102,13 @@ public class Entity {
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+
+    public boolean isCollidable() {
+        return collidable;
+    }
+
+    public void setCollidable(boolean collidable) {
+        this.collidable = collidable;
     }
 }

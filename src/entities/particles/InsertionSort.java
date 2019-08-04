@@ -1,6 +1,4 @@
-package toolbox;
-
-import entities.particles.Particle;
+package entities.particles;
 
 import java.util.List;
 
