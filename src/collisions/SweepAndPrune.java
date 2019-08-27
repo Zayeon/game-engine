@@ -6,10 +6,14 @@ import java.util.List;
 public class SweepAndPrune {
 
     private List<AxisAlignedBoundingBox> boxes = new ArrayList<>();
-    private List<AxisAlignedBoundingBox> newBoxes = new ArrayList<>();
     private List<EndPoint> endPointsX = new ArrayList<>();
     private List<EndPoint> endPointsY = new ArrayList<>();
     private List<EndPoint> endPointsZ = new ArrayList<>();
+
+    private List<AxisAlignedBoundingBox> newBoxes = new ArrayList<>();
+    private List<EndPoint> newEndPointsX = new ArrayList<>();
+    private List<EndPoint> newEndPointsY = new ArrayList<>();
+    private List<EndPoint> newEndPointsZ = new ArrayList<>();
 
     public void updateBox(AxisAlignedBoundingBox box, float minX, float maxX, float minY, float maxY, float minZ, float maxZ){
 
@@ -26,24 +30,6 @@ public class SweepAndPrune {
         // checking X axis for collisions
         if (minX > box.getMinX().value){
             // moving right
-            box.getMinX().value = minX;
-            int index = endPointsX.indexOf(box.getMinX());
-            int newIndex;
-            for (newIndex = index + 1; newIndex < endPointsX.size(); newIndex++){
-                if(box.getMinX().value > endPointsX.get(newIndex).value){
-                    if (!endPointsX.get(newIndex).isMinimum() && endPointsX.get(newIndex).getOwner() != box){
-                        AxisAlignedBoundingBox comparativeBox = endPointsX.get(newIndex).getOwner();
-                        if (!checkBoxOverlapYZ(box, comparativeBox)){
-                            // update pair manager with no overlap
-                        }
-                    }
-                }else{
-                    break;
-                }
-            }
-            endPointsX.remove(box.getMinX());
-            endPointsX.add(newIndex-1, box.getMinX());
-
             box.getMaxX().value = maxX;
             int index2 = endPointsX.indexOf(box.getMaxX());
             int newIndex2;
@@ -52,7 +38,8 @@ public class SweepAndPrune {
                     if (endPointsX.get(newIndex2).isMinimum() && endPointsX.get(newIndex2).getOwner() != box){
                         AxisAlignedBoundingBox comparativeBox = endPointsX.get(newIndex2).getOwner();
                         if (checkBoxOverlapYZ(box, comparativeBox)){
-                            // update pair manager with overlap
+                            // update pair manager with  overlap
+                            System.out.println("start overlap");
                         }
                     }
                 }else{
@@ -61,6 +48,24 @@ public class SweepAndPrune {
             }
             endPointsX.remove(box.getMaxX());
             endPointsX.add(newIndex2-1, box.getMaxX());
+
+
+            box.getMinX().value = minX;
+            int index = endPointsX.indexOf(box.getMinX());
+            int newIndex;
+            for (newIndex = index + 1; newIndex < endPointsX.size(); newIndex++){
+                if(box.getMinX().value > endPointsX.get(newIndex).value){
+                    if (!endPointsX.get(newIndex).isMinimum() && endPointsX.get(newIndex).getOwner() != box){
+                        System.out.println("stop overlap");
+                    }
+                }else{
+                    break;
+                }
+            }
+            endPointsX.remove(box.getMinX());
+            endPointsX.add(newIndex-1, box.getMinX());
+
+
 
         }else if(minX < box.getMinX().value){
             // moving left
@@ -73,6 +78,7 @@ public class SweepAndPrune {
                         AxisAlignedBoundingBox comparativeBox = endPointsX.get(newIndex).getOwner();
                         if (checkBoxOverlapYZ(box, comparativeBox)){
                             // update pair manager with overlap
+                            System.out.println("start overlap");
                         }
                     }
                 }else{
@@ -89,45 +95,32 @@ public class SweepAndPrune {
             for(newIndex2 = index2 - 1; newIndex2 >=0; newIndex2--){
                 if(box.getMaxX().value < endPointsX.get(newIndex2).value){
                     if (endPointsX.get(newIndex2).isMinimum() && endPointsX.get(newIndex2).getOwner() != box){
-                        AxisAlignedBoundingBox comparativeBox = endPointsX.get(newIndex2).getOwner();
-                        if (!checkBoxOverlapYZ(box, comparativeBox)){
-                            // update pair manager with no overlap
-                        }
+                        System.out.println("stop overlap");
                     }
                 }else{
                     break;
                 }
             }
             endPointsX.remove(box.getMaxX());
-            endPointsX.add(newIndex2-1, box.getMaxX());
+            endPointsX.add(newIndex2+1, box.getMaxX());
         }
 
     }
 
     public void addBox(AxisAlignedBoundingBox box){
         newBoxes.add(box);
+        newEndPointsX.add(box.getMinX());
+        newEndPointsX.add(box.getMaxX());
+        newEndPointsY.add(box.getMinY());
+        newEndPointsY.add(box.getMaxY());
+        newEndPointsZ.add(box.getMinZ());
+        newEndPointsZ.add(box.getMaxZ());
 
     }
-    
-    public void addTestBoxes(){
-        AxisAlignedBoundingBox box1 = new AxisAlignedBoundingBox(0, 1, 0, 1, 0, 1);
-        AxisAlignedBoundingBox box2 = new AxisAlignedBoundingBox(0.1f, 1.1f, 0.1f, 1.1f, 0.1f, 1.1f);
-        endPointsX.add(box1.getMinX());
-        endPointsX.add(box2.getMinX());
-        endPointsX.add(box1.getMaxX());
-        endPointsX.add(box2.getMaxX());
 
-        endPointsY.add(box1.getMinY());
-        endPointsY.add(box2.getMinY());
-        endPointsY.add(box1.getMaxY());
-        endPointsY.add(box2.getMaxY());
-
-        endPointsZ.add(box1.getMinZ());
-        endPointsZ.add(box2.getMinZ());
-        endPointsZ.add(box1.getMaxZ());
-        endPointsZ.add(box2.getMaxZ());
-
-
+    public void organiseNewBoxes(){
+        // Called every frame
+        
     }
 
 
@@ -145,22 +138,10 @@ public class SweepAndPrune {
         }
     }
 
-    private boolean checkBoxOverlapYZ(AxisAlignedBoundingBox box, AxisAlignedBoundingBox comparativeBox){
-        // checking if overlap on y axis
-         return ((endPointsY.indexOf(box.getMinY()) < endPointsY.indexOf(comparativeBox.getMinY()) &&
-                endPointsY.indexOf(comparativeBox.getMinY()) < endPointsY.indexOf(box.getMaxY()))
-
-                || (endPointsY.indexOf(box.getMinY()) < endPointsY.indexOf(comparativeBox.getMaxY()) &&
-                endPointsY.indexOf(comparativeBox.getMinY()) < endPointsY.indexOf(box.getMaxY()))
-
-            &&
-
-            // checking if overlap on z axis
-             (endPointsY.indexOf(box.getMinZ()) < endPointsY.indexOf(comparativeBox.getMinZ()) &&
-                    endPointsY.indexOf(comparativeBox.getMinZ()) < endPointsY.indexOf(box.getMaxZ()))
-
-                    || (endPointsY.indexOf(box.getMinZ()) < endPointsY.indexOf(comparativeBox.getMaxZ()) &&
-                    endPointsY.indexOf(comparativeBox.getMinZ()) < endPointsY.indexOf(box.getMaxZ())));
+    private boolean checkBoxOverlapYZ(AxisAlignedBoundingBox a, AxisAlignedBoundingBox b){
+        // checking if overlap on y and z axis
+         return  (a.getMinY().value <= b.getMaxY().value && a.getMaxY().value >= b.getMinY().value) &&
+                 (a.getMinZ().value <= b.getMaxZ().value && a.getMaxZ().value >= b.getMinZ().value);
 
 
 
