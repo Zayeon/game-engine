@@ -120,7 +120,13 @@ public class SweepAndPrune {
 
     public void organiseNewBoxes(){
         // Called every frame
+        sortAxis(newEndPointsX);
+        sortAxis(newEndPointsY);
+        sortAxis(newEndPointsZ);
         
+        for(int i=endPointsX.size()-1; i > 0; i--){
+        
+        }
     }
 
 
