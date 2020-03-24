@@ -10,8 +10,8 @@ import toolbox.Maths;
 import java.util.List;
 
 public class TerrainShader extends ShaderProgram {
-    private static final String VERTEX_FILE = "/renderEngine/shaders/terrainVertexShader.txt";
-    private static final String FRAGMENT_FILE = "/renderEngine/shaders/terrainFragmentShader.txt";
+    private static final String VERTEX_FILE = "src/renderEngine/shaders/terrainVertexShader.txt";
+    private static final String FRAGMENT_FILE = "src/renderEngine/shaders/terrainFragmentShader.txt";
 
     private static final int MAX_LIGHTS = 4;
 

@@ -8,8 +8,8 @@ import toolbox.Maths;
 
 public class WaterShader extends ShaderProgram {
 
-	private final static String VERTEX_FILE = "/entities/water/waterVertex.txt";
-	private final static String FRAGMENT_FILE = "/entities/water/waterFragment.txt";
+	private final static String VERTEX_FILE = "src/entities/water/waterVertex.txt";
+	private final static String FRAGMENT_FILE = "src/entities/water/waterFragment.txt";
 
 	private int location_modelMatrix;
 	private int location_viewMatrix;

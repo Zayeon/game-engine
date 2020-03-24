@@ -1,6 +1,10 @@
 package entities.water;
 
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL32;
+import renderEngine.NewDisplayManager;
 
 import java.nio.ByteBuffer;
 
@@ -44,7 +48,7 @@ public class WaterFrameBuffers {
 
     public void unbindCurrentFrameBuffer() {//call to switch to default frame buffer
         GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        GL11.glViewport(0, 0, NewDisplayManager.WIDTH, NewDisplayManager.HEIGHT);
     }
 
     public int getReflectionTexture() {//get the resulting texture

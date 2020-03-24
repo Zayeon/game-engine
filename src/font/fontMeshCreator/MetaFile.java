@@ -1,5 +1,7 @@
 package font.fontMeshCreator;
 
+import renderEngine.NewDisplayManager;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -46,7 +48,7 @@ public class MetaFile {
 	 *            - the font file.
 	 */
 	protected MetaFile(File file) {
-		this.aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
+		this.aspectRatio = (double) NewDisplayManager.WIDTH / (double) NewDisplayManager.HEIGHT;
 		openFile(file);
 		loadPaddingData();
 		loadLineSizes();

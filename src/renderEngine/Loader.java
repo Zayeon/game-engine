@@ -1,14 +1,11 @@
 package renderEngine;
 
+import de.matthiasmann.twl.utils.PNGDecoder;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
-import org.newdawn.slick.opengl.PNGDecoder;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 import renderEngine.models.RawModel;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -125,24 +122,24 @@ public class Loader {
 	}
 
 	private int loadGenericTexture(String filePath){
-        Texture texture = null;
-        try {
-            texture = TextureLoader.getTexture("PNG", new FileInputStream(filePath));
-            GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0f);
-            if(GLContext.getCapabilities().GL_EXT_texture_filter_anisotropic){
-                float amount = Math.min(4f,
-                        GL11.glGetFloat(EXTTextureFilterAnisotropic.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
-                GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                        amount);
-            }else{
-                System.out.println("Anisotropic filtering not supported");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        int textureID = GL11.glGenTextures();
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glBindTexture(GL13.GL_TEXTURE_2D, textureID);
+        TextureData data = decodeTextureFile(filePath);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, data.getWidth(), data.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data.getBuffer());
+
+        GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0f);
+        if(NewDisplayManager.getCapabilities().GL_EXT_texture_filter_anisotropic){
+            float amount = Math.min(4f,
+                    GL11.glGetFloat(EXTTextureFilterAnisotropic.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+            GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT,
+                    amount);
+        }else{
+            System.out.println("Anisotropic filtering not supported");
         }
-        int textureID = texture.getTextureID();
         textures.add(textureID);
         return textureID;
     }
@@ -157,7 +154,7 @@ public class Loader {
 			width = decoder.getWidth();
 			height = decoder.getHeight();
 			buffer = ByteBuffer.allocateDirect(4 * width * height);
-			decoder.decode(buffer, width * 4, PNGDecoder.RGBA);
+			decoder.decode(buffer, width * 4, PNGDecoder.Format.RGBA);
 			buffer.flip();
 			in.close();
 		} catch (Exception e) {

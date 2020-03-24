@@ -9,24 +9,23 @@ public class AudioTest {
         AudioMaster.setListenerData(0 ,0, 0);
         //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
-        int buffer = AudioMaster.loadSound("res/sounds/bounce.wav");
+        int buffer = AudioMaster.loadSound("res/sounds/jj-omg.ogg");
         Source source = new Source();
 
         source.setLooping(true);
         source.play(buffer);
 
-        float xPos = 0;
-        source.setPosition(xPos, 0, 0);
+        float xPos = 10;
+        source.setPosition(xPos, 0, 0.1f);
 
-        char c = ' ';
-        while (c != 'q'){
-            xPos -= 0.03f;
-            source.setPosition(xPos, 0, 0);
+        while (true){
+            xPos -= 0.01f;
+            source.setPosition(xPos, 0, 0.1f);
             System.out.println(xPos);
             Thread.sleep(10);
 
         }
-        source.delete();
-        AudioMaster.cleanUp();
+        //source.delete();
+        //AudioMaster.cleanUp();
     }
 }

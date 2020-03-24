@@ -20,11 +20,14 @@ import font.fontMeshCreator.FontType;
 import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL30;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import renderEngine.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
+import renderEngine.Loader;
+import renderEngine.MasterRenderer;
+import renderEngine.NewDisplayManager;
+import renderEngine.OBJLoader;
 import renderEngine.models.ModelTexture;
 import renderEngine.models.TexturedModel;
 import toolbox.DayTracker;
@@ -49,7 +52,7 @@ public class MainGameLoop {
         AudioMaster.setListenerData(0 ,0, 0);
         //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
-        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.wav");
+        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.ogg");
         Source source = new Source();
 
         float xPos = 0;
@@ -225,36 +228,36 @@ public class MainGameLoop {
 
             GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 
-            // shadows
-            renderer.renderShadowMap(entities, sun);
-
-            // particles
-            system.generateParticles(new Vector3f(100, 10, -100));
-            system.generateParticles(new Vector3f(0, 10, 0));
-
-
-            // Rendering the scene to the reflection frame buffer
-            fbos.bindReflectionFrameBuffer();
-            float distance = 2 * (camera.getPosition().y - water.getHeight());
-            camera.getPosition().y -= distance;
-            camera.invertPitch();
-            renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, 1, 0, -water.getHeight()+1f));
-            camera.getPosition().y += distance;
-            camera.invertPitch();
-
-            // Rendering the scene to the refraction frame buffer
-            fbos.bindRefractionFrameBuffer();
-            renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, -1, 0, water.getHeight()));
-            fbos.unbindCurrentFrameBuffer();
+//            // shadows
+//            renderer.renderShadowMap(entities, sun);
+//
+//            // particles
+//            system.generateParticles(new Vector3f(100, 10, -100));
+//            system.generateParticles(new Vector3f(0, 10, 0));
+//
+//
+//            // Rendering the scene to the reflection frame buffer
+//            fbos.bindReflectionFrameBuffer();
+//            float distance = 2 * (camera.getPosition().y - water.getHeight());
+//            camera.getPosition().y -= distance;
+//            camera.invertPitch();
+//            renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, 1, 0, -water.getHeight()+1f));
+//            camera.getPosition().y += distance;
+//            camera.invertPitch();
+//
+//            // Rendering the scene to the refraction frame buffer
+//            fbos.bindRefractionFrameBuffer();
+//            renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, -1, 0, water.getHeight()));
+//            fbos.unbindCurrentFrameBuffer();
 
             // General Rendering
             renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, -1, 0, 1000000));
-            waterRenderer.render(waters, camera, lights.get(0));
-            ParticleMaster.renderParticles(camera);
+//            waterRenderer.render(waters, camera, lights.get(0));
+//            ParticleMaster.renderParticles(camera);
 
             // Gui Rendering
-            guiRenderer.render(guis);
-            TextMaster.render();
+//            guiRenderer.render(guis);
+//            TextMaster.render();
 
 //            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
 //                source.play(bounceSound);

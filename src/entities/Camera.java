@@ -1,8 +1,8 @@
 package entities;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
+import renderEngine.NewDisplayManager;
 
 public class Camera {
 
@@ -21,7 +21,7 @@ public class Camera {
     }
 
     public void move(){
-        calculateZoom();
+        //calculateZoom();
         calculateCameraMovement();
         float horizontalDistance = calculateHorizontalDistance();
         float verticalDistance = calculateVerticalDistance();
@@ -69,22 +69,22 @@ public class Camera {
 
 
     private void calculateZoom(){
-        float zoomLevel = Mouse.getDWheel() * 0.1f;
-        distanceFromPlayer -= zoomLevel;
-        distanceFromPlayer = Math.max(distanceFromPlayer, 5f); // minimum zoom
-        //distanceFromPlayer = Math.min(distanceFromPlayer, 50f); // maximum zoom
+//        float zoomLevel = Mouse.getDWheel() * 0.1f;
+//        distanceFromPlayer -= zoomLevel;
+//        distanceFromPlayer = Math.max(distanceFromPlayer, 5f); // minimum zoom
+//        distanceFromPlayer = Math.min(distanceFromPlayer, 50f); // maximum zoom
     }
 
     private void calculateCameraMovement(){
-        if(Mouse.isButtonDown(1)){
-            float angleChange = Mouse.getDX() * 0.3f;
+        if(NewDisplayManager.getMouseButton(1)){
+            float angleChange = NewDisplayManager.getDX() * 0.3f;
             angleAroundPlayer -= angleChange;
-            float pitchChange = Mouse.getDY() * 0.1f;
+            float pitchChange = NewDisplayManager.getDY() * 0.1f;
             pitch -= pitchChange;
             //pitch = Math.max(pitch, 0.0f);
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_R)){
+        if(NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_R)){
             distanceFromPlayer = 30;
             pitch = 30;
             angleAroundPlayer = 0;

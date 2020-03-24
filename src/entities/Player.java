@@ -1,9 +1,11 @@
 package entities;
 
 import entities.terrains.Terrain;
-//import org.lwjgl.input.Keyboard;
 import org.joml.Vector3f;
+import renderEngine.NewDisplayManager;
 import renderEngine.models.TexturedModel;
+
+//import org.lwjgl.input.Keyboard;
 
 public class Player extends Entity {
 
@@ -24,13 +26,13 @@ public class Player extends Entity {
 
     public void move(Terrain terrain){
         checkInputs();
-        super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
-        float distance = currentSpeed * DisplayManager.getFrameTimeSeconds();
+        super.increaseRotation(0, currentTurnSpeed * NewDisplayManager.getFrameTimeSeconds(), 0);
+        float distance = currentSpeed * NewDisplayManager.getFrameTimeSeconds();
         float dx = (float)(distance * Math.sin(Math.toRadians(super.getRotY())));
         float dz = (float)(distance * Math.cos(Math.toRadians(super.getRotY())));
         super.increasePosition(dx, 0, dz);
-        upwardsSpeed -= GRAVITY * DisplayManager.getFrameTimeSeconds();
-        super.increasePosition(0, upwardsSpeed * DisplayManager.getFrameTimeSeconds(), 0);
+        upwardsSpeed -= GRAVITY * NewDisplayManager.getFrameTimeSeconds();
+        super.increasePosition(0, upwardsSpeed * NewDisplayManager.getFrameTimeSeconds(), 0);
 
         float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
         if (super.getPosition().y < terrainHeight){
