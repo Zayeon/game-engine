@@ -1,7 +1,5 @@
 package toolbox;
 
-import renderEngine.DisplayManager;
-
 public class DayTracker {
     private float time = 0f; // day = 60 seconds
 

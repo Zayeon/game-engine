@@ -2,7 +2,7 @@ package entities.water;
 
 import entities.Camera;
 import entities.Light;
-import org.lwjgl.util.vector.Matrix4f;
+import org.joml.Matrix4f;
 import renderEngine.shaders.ShaderProgram;
 import toolbox.Maths;
 

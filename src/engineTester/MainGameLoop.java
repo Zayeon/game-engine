@@ -20,16 +20,11 @@ import font.fontMeshCreator.FontType;
 import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-import renderEngine.DisplayManager;
-import renderEngine.Loader;
-import renderEngine.MasterRenderer;
-import renderEngine.OBJLoader;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+import renderEngine.*;
 import renderEngine.models.ModelTexture;
 import renderEngine.models.TexturedModel;
 import toolbox.DayTracker;
@@ -44,7 +39,7 @@ public class MainGameLoop {
 
 	public static void main(String[] args) {
 
-		DisplayManager.createDisplay();
+		NewDisplayManager.createDisplay();
 		Loader loader = new Loader();
         Random random = new Random(12345);
 
@@ -222,7 +217,7 @@ public class MainGameLoop {
 
         //*****Game Loop*****
 
-        while(!Display.isCloseRequested()){
+        while(!NewDisplayManager.isCloseRequested()){
             camera.move();
             picker.update();
             player.move(terrains.get(0));
@@ -261,11 +256,14 @@ public class MainGameLoop {
             guiRenderer.render(guis);
             TextMaster.render();
 
-            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
-                source.play(bounceSound);
-            }
+//            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
+//                source.play(bounceSound);
+//            }
+//            if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+//                System.out.println("You have escaped NOTHING!");
+//            }
 
-            DisplayManager.updateDisplay();
+            NewDisplayManager.updateDisplay();
             dayTracker.tick();
         }
 
@@ -281,7 +279,7 @@ public class MainGameLoop {
         guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
-        DisplayManager.closeDisplay();
+        NewDisplayManager.closeDisplay();
         source.delete();
         AudioMaster.cleanUp();
 

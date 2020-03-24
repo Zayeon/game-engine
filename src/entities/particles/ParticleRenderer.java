@@ -3,8 +3,8 @@ package entities.particles;
 import entities.Camera;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
 import toolbox.Maths;
@@ -82,7 +82,7 @@ public class ParticleRenderer {
 
 	private void updateModelViewMatrix(Vector3f position, float rotation, float scale, Matrix4f viewMatrix, float[] vboData){
 	    Matrix4f modelMatrix = new Matrix4f();
-	    Matrix4f.translate(position, modelMatrix, modelMatrix);
+	    modelMatrix.translate(position);
 
 	    // Sets the rotation 3x3 part of the model matrix to the transpose of the 3x3 rotation part of the view matrix
         // The rotation in the model matrix will now cancel out the rotation in the view matrix, meaning that no rotation is applied to the particle

@@ -1,9 +1,8 @@
 package entities.skybox;
 
 import entities.Camera;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import renderEngine.DisplayManager;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import renderEngine.shaders.ShaderProgram;
 import toolbox.Maths;
 
