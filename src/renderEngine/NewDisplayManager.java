@@ -2,6 +2,7 @@ package renderEngine;
 
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
@@ -18,12 +19,12 @@ public class NewDisplayManager {
     private static float lastFrameTime = 0;
     private static float delta;
     private static GLFWErrorCallback errorCallback;
+    private static GLFWCursorPosCallback cursorCallback;
     private static GLCapabilities capabilities;
     private static float lastX;
     private static float lastY;
     private static float dx;
     private static float dy;
-
 
     public static void createDisplay(){
 
@@ -39,6 +40,12 @@ public class NewDisplayManager {
         windowKey = GLFW.glfwCreateWindow(WIDTH, HEIGHT, WINDOW_TITLE, 0, 0);
 
         GLFW.glfwSetInputMode(windowKey, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+        GLFW.glfwSetCursorPosCallback(windowKey, cursorCallback = new GLFWCursorPosCallback(){
+            @Override
+            public void invoke(long window, double xpos, double ypos) {
+                NewDisplayManager.cursorPositionCallback(xpos,  ypos);
+            }
+        });
 
         // Check if window was created
         if (windowKey == 0){
@@ -124,11 +131,9 @@ public class NewDisplayManager {
         return dy;
     }
 
-
-
-    private void cursorPositionCallback(long window, double xpos, double ypos){
-        dx = lastX - (float)xpos;
-        dy = lastY - (float)ypos;
+    private static void cursorPositionCallback(double xpos, double ypos){
+        dx = (float)xpos - lastX;
+        dy = (float)ypos - lastY;
         lastX = (float)xpos;
         lastY = (float)ypos;
     }

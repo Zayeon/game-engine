@@ -1,14 +1,15 @@
 package renderEngine.shaders;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Scanner;
 
@@ -65,7 +66,6 @@ public abstract class ShaderProgram {
 
     protected void loadMatrix(int location, Matrix4f matrix){
         matrix.get(matrixBuffer);
-        matrixBuffer.flip();
         GL20.glUniformMatrix4fv(location, false, matrixBuffer);
     }
 
@@ -102,13 +102,14 @@ public abstract class ShaderProgram {
             String line;
             while(reader.hasNextLine()){
                 line = reader.nextLine();
-                shaderSource.append(line).append("//\n");
+                shaderSource.append(line).append("\n");
             }
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
             System.exit(-1);
         }
+        System.out.println(shaderSource.toString());
         int shaderID = GL20.glCreateShader(type);
         GL20.glShaderSource(shaderID, shaderSource);
         GL20.glCompileShader(shaderID);
