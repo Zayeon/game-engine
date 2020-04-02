@@ -65,8 +65,7 @@ public abstract class ShaderProgram {
     }
 
     protected void loadMatrix(int location, Matrix4f matrix){
-        matrix.get(matrixBuffer);
-        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
+        GL20.glUniformMatrix4fv(location, false, matrix.get(matrixBuffer));
     }
 
     public void start(){
@@ -109,7 +108,6 @@ public abstract class ShaderProgram {
             e.printStackTrace();
             System.exit(-1);
         }
-        System.out.println(shaderSource.toString());
         int shaderID = GL20.glCreateShader(type);
         GL20.glShaderSource(shaderID, shaderSource);
         GL20.glCompileShader(shaderID);

@@ -17,9 +17,11 @@ import entities.water.WaterRenderer;
 import entities.water.WaterShader;
 import entities.water.WaterTile;
 import font.fontMeshCreator.FontType;
+import font.fontMeshCreator.GUIText;
 import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -65,8 +67,8 @@ public class MainGameLoop {
 
         TextMaster.init(loader);
         FontType font = new FontType(loader.loadFontTexture("candara"), new File("res/font/candara.fnt"));
-        //GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
-        //text.setColour(1, 0, 1);
+        GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
+        text.setColour(1, 0, 1);
 
         //**************
 
@@ -216,6 +218,12 @@ public class MainGameLoop {
 
         //*******************
 
+        Vector2f v1 = new Vector2f(0f, 1f);
+        Vector2f v2 = new Vector2f(6f, 9f);
+        Vector2f v3 = v1.add(v2);
+        System.out.println(v1);
+        System.out.println(v2);
+        System.out.println(v3);
 
         //*****Game Loop*****
 
