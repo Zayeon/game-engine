@@ -17,7 +17,7 @@ public class NewDisplayManager {
 
     private static long windowKey;
     private static float lastFrameTime = 0;
-    private static float delta;
+    private static float delta = 0;
     private static GLFWErrorCallback errorCallback;
     private static GLFWCursorPosCallback cursorCallback;
     private static GLCapabilities capabilities;
@@ -30,6 +30,7 @@ public class NewDisplayManager {
 
         // Setup GLFW
         GLFW.glfwInit();
+
         GLFW.glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
         // Define properties and create window
@@ -37,7 +38,13 @@ public class NewDisplayManager {
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
         GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 3);
         GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
+        GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
         windowKey = GLFW.glfwCreateWindow(WIDTH, HEIGHT, WINDOW_TITLE, 0, 0);
+
+        // Check if window was created
+        if (windowKey == 0){
+            throw new RuntimeException("Failed to create window");
+        }
 
         GLFW.glfwSetInputMode(windowKey, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
         GLFW.glfwSetCursorPosCallback(windowKey, cursorCallback = new GLFWCursorPosCallback(){
@@ -47,10 +54,6 @@ public class NewDisplayManager {
             }
         });
 
-        // Check if window was created
-        if (windowKey == 0){
-            throw new RuntimeException("Failed to create window");
-        }
 
         // Set context to this window
         GLFW.glfwMakeContextCurrent(windowKey);
@@ -73,13 +76,16 @@ public class NewDisplayManager {
         return GLFW.glfwWindowShouldClose(windowKey);
     }
 
+    public static void setupDisplay(){
+
+    }
+
     public static void updateDisplay(){
-        GLFW.glfwPollEvents();
         GLFW.glfwSwapBuffers(windowKey);
+        GLFW.glfwPollEvents();
         float currentFrameTime = (float) GLFW.glfwGetTime();
         delta = currentFrameTime - lastFrameTime;
         lastFrameTime = currentFrameTime;
-
     }
 
     public static float getFrameTimeSeconds(){

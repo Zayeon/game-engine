@@ -185,7 +185,7 @@ public class MainGameLoop {
         WaterShader waterShader = new WaterShader();
         WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), fbos);
         List<WaterTile> waters = new ArrayList<>();
-        WaterTile water = new WaterTile(100, -100, -4f);
+        WaterTile water = new WaterTile(100, -100, -3f);
         waters.add(water);
 
 
@@ -218,29 +218,23 @@ public class MainGameLoop {
 
         //*******************
 
-        Vector2f v1 = new Vector2f(0f, 1f);
-        Vector2f v2 = new Vector2f(6f, 9f);
-        Vector2f v3 = v1.add(v2);
-        System.out.println(v1);
-        System.out.println(v2);
-        System.out.println(v3);
-
         //*****Game Loop*****
 
         while(!NewDisplayManager.isCloseRequested()){
+            NewDisplayManager.setupDisplay();
             camera.move();
             picker.update();
             player.move(terrains.get(0));
             ParticleMaster.update(camera);
 
             GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-
+            // TODO: FIX shadows and particles
             // shadows
             renderer.renderShadowMap(entities, sun);
 
-            // particles
-            system.generateParticles(new Vector3f(100, 10, -100));
-            system.generateParticles(new Vector3f(0, 10, 0));
+//            // particles
+//            system.generateParticles(new Vector3f(100, 10, -100));
+//            system.generateParticles(new Vector3f(0, 10, 0));
 
 
             // Rendering the scene to the reflection frame buffer
