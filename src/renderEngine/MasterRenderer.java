@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL13;
 import renderEngine.models.TexturedModel;
 import renderEngine.shaders.StaticShader;
 import renderEngine.shaders.TerrainShader;
-import shadows.ShadowMapMasterRenderer;
+import renderEngine.shadows.ShadowMapMasterRenderer;
 import toolbox.DayTracker;
 
 import java.util.ArrayList;

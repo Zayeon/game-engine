@@ -3,12 +3,13 @@ package entities.terrains;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import renderEngine.Loader;
+import renderEngine.TextureData;
 import renderEngine.models.RawModel;
 import toolbox.Maths;
 
 public class Terrain {
 
-    private static final float SIZE = 200;
+    public static final float SIZE = 200;
 
     private float x;
     private float z;
@@ -77,9 +78,10 @@ public class Terrain {
         return answer;
     }
 
-    private RawModel generateTerrain(Loader loader, String heightMap){
+    private RawModel generateTerrain(Loader loader, String heightMapFile){
 
-        HeightsGenerator generator = new HeightsGenerator();
+        TextureData heightMap = loader.decodeTextureFile("res/util/" + heightMapFile + ".png");
+        HeightsGenerator generator = new HeightsGenerator(heightMap);
         int VERTEX_COUNT = 128;
 
         heights = new float[VERTEX_COUNT][VERTEX_COUNT];

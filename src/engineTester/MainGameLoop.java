@@ -16,11 +16,11 @@ import entities.water.WaterFrameBuffers;
 import entities.water.WaterRenderer;
 import entities.water.WaterShader;
 import entities.water.WaterTile;
-import font.fontMeshCreator.FontType;
-import font.fontMeshCreator.GUIText;
-import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
+import guis.font.fontMeshCreator.FontType;
+import guis.font.fontMeshCreator.GUIText;
+import guis.font.fontRendering.TextMaster;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -144,7 +144,7 @@ public class MainGameLoop {
 
         //*****PLAYER STUFF*****
 
-        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.4f);
+        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.5f);
         Camera camera = new Camera(player);
 
         player.setPosition(new Vector3f(100, 0, -100));
@@ -197,8 +197,8 @@ public class MainGameLoop {
         //*****GUI STUFF*****
 
         List<GuiTexture> guis = new ArrayList<>();
-        //GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
-        //guis.add(shadowMap);
+        GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
+        guis.add(shadowMap);
         GuiRenderer guiRenderer = new GuiRenderer(loader);
 
         //*******************
@@ -228,8 +228,8 @@ public class MainGameLoop {
             ParticleMaster.update(camera);
 
             GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-            // TODO: FIX shadows and particles
-            // shadows
+            // TODO: FIX renderEngine.shadows and particles
+            // renderEngine.shadows
             renderer.renderShadowMap(entities, sun);
 
 //            // particles
