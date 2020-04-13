@@ -1,12 +1,10 @@
 package entities;
 
 import entities.terrains.Terrain;
-import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
-import renderEngine.NewDisplayManager;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
 import renderEngine.models.TexturedModel;
-
-//import org.lwjgl.input.Keyboard;
 
 public class Player extends Entity {
 
@@ -27,13 +25,13 @@ public class Player extends Entity {
 
     public void move(Terrain terrain){
         checkInputs();
-        super.increaseRotation(0, currentTurnSpeed * NewDisplayManager.getFrameTimeSeconds(), 0);
-        float distance = currentSpeed * NewDisplayManager.getFrameTimeSeconds();
+        super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
+        float distance = currentSpeed * DisplayManager.getFrameTimeSeconds();
         float dx = (float)(distance * Math.sin(Math.toRadians(super.getRotY())));
         float dz = (float)(distance * Math.cos(Math.toRadians(super.getRotY())));
         super.increasePosition(dx, 0, dz);
-        upwardsSpeed -= GRAVITY * NewDisplayManager.getFrameTimeSeconds();
-        super.increasePosition(0, upwardsSpeed * NewDisplayManager.getFrameTimeSeconds(), 0);
+        upwardsSpeed -= GRAVITY * DisplayManager.getFrameTimeSeconds();
+        super.increasePosition(0, upwardsSpeed * DisplayManager.getFrameTimeSeconds(), 0);
 
         float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
         if (super.getPosition().y < terrainHeight){
@@ -53,27 +51,27 @@ public class Player extends Entity {
     }
 
     private void checkInputs(){
-        if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_W)){
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)){
             this.currentSpeed = RUN_SPEED;
 
-        }else if(NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_S)){
+        }else if(Keyboard.isKeyDown(Keyboard.KEY_S)){
             this.currentSpeed = -RUN_SPEED;
 
         }else {
             this.currentSpeed = 0;
         }
 
-        if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_D)){
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)){
             this.currentTurnSpeed = -TURN_SPEED;
 
-        }else if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_A)){
+        }else if (Keyboard.isKeyDown(Keyboard.KEY_A)){
             this.currentTurnSpeed = TURN_SPEED;
 
         }else {
             this.currentTurnSpeed = 0;
         }
 
-        if(NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_SPACE)){
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
             jump();
         }
 

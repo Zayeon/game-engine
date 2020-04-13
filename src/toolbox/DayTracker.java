@@ -1,6 +1,6 @@
 package toolbox;
 
-import renderEngine.NewDisplayManager;
+import renderEngine.DisplayManager;
 
 public class DayTracker {
     private float time = 0f; // day = 60 seconds
@@ -12,7 +12,7 @@ public class DayTracker {
     }
 
     public void tick(){
-        time += NewDisplayManager.getFrameTimeSeconds();
+        time += DisplayManager.getFrameTimeSeconds();
         time %= secondsPerDay;
     }
 

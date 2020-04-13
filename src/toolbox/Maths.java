@@ -1,9 +1,9 @@
 package toolbox;
 
 import entities.Camera;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Maths {
     public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale){

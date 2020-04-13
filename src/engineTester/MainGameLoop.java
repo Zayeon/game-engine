@@ -16,20 +16,19 @@ import entities.water.WaterFrameBuffers;
 import entities.water.WaterRenderer;
 import entities.water.WaterShader;
 import entities.water.WaterTile;
+import font.fontMeshCreator.FontType;
+import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
-import guis.font.fontMeshCreator.FontType;
-import guis.font.fontMeshCreator.GUIText;
-import guis.font.fontRendering.TextMaster;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
-import renderEngine.NewDisplayManager;
 import renderEngine.OBJLoader;
 import renderEngine.models.ModelTexture;
 import renderEngine.models.TexturedModel;
@@ -45,7 +44,7 @@ public class MainGameLoop {
 
 	public static void main(String[] args) {
 
-		NewDisplayManager.createDisplay();
+		DisplayManager.createDisplay();
 		Loader loader = new Loader();
         Random random = new Random(12345);
 
@@ -55,7 +54,7 @@ public class MainGameLoop {
         AudioMaster.setListenerData(0 ,0, 0);
         //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
-        int bounceSound = AudioMaster.loadSound("res/sounds/jj-omg.ogg");
+        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.wav");
         Source source = new Source();
 
         float xPos = 0;
@@ -67,8 +66,8 @@ public class MainGameLoop {
 
         TextMaster.init(loader);
         FontType font = new FontType(loader.loadFontTexture("candara"), new File("res/font/candara.fnt"));
-        GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
-        text.setColour(1, 0, 1);
+        //GUIText text = new GUIText("Sample Text", 3, font, new Vector2f(0.5f, 0.5f), 0.5f, true);
+        //text.setColour(1, 0, 1);
 
         //**************
 
@@ -144,7 +143,7 @@ public class MainGameLoop {
 
         //*****PLAYER STUFF*****
 
-        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.5f);
+        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.4f);
         Camera camera = new Camera(player);
 
         player.setPosition(new Vector3f(100, 0, -100));
@@ -185,7 +184,7 @@ public class MainGameLoop {
         WaterShader waterShader = new WaterShader();
         WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), fbos);
         List<WaterTile> waters = new ArrayList<>();
-        WaterTile water = new WaterTile(100, -100, -3f);
+        WaterTile water = new WaterTile(100, -100, -4f);
         waters.add(water);
 
 
@@ -197,8 +196,8 @@ public class MainGameLoop {
         //*****GUI STUFF*****
 
         List<GuiTexture> guis = new ArrayList<>();
-        GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
-        guis.add(shadowMap);
+        //GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
+        //guis.add(shadowMap);
         GuiRenderer guiRenderer = new GuiRenderer(loader);
 
         //*******************
@@ -218,23 +217,25 @@ public class MainGameLoop {
 
         //*******************
 
+
+
+
         //*****Game Loop*****
 
-        while(!NewDisplayManager.isCloseRequested()){
-            NewDisplayManager.setupDisplay();
+        while(!Display.isCloseRequested()){
             camera.move();
             picker.update();
             player.move(terrains.get(0));
             ParticleMaster.update(camera);
 
             GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-            // TODO: FIX renderEngine.shadows and particles
-            // renderEngine.shadows
+
+            // shadows
             renderer.renderShadowMap(entities, sun);
 
-//            // particles
-//            system.generateParticles(new Vector3f(100, 10, -100));
-//            system.generateParticles(new Vector3f(0, 10, 0));
+            // particles
+            system.generateParticles(new Vector3f(100, 10, -100));
+            system.generateParticles(new Vector3f(0, 10, 0));
 
 
             // Rendering the scene to the reflection frame buffer
@@ -260,14 +261,11 @@ public class MainGameLoop {
             guiRenderer.render(guis);
             TextMaster.render();
 
-            if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_Y)){
+            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
                 source.play(bounceSound);
             }
-            if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_ESCAPE)){
-                System.out.println("You have escaped NOTHING!");
-            }
 
-            NewDisplayManager.updateDisplay();
+            DisplayManager.updateDisplay();
             dayTracker.tick();
         }
 
@@ -283,7 +281,7 @@ public class MainGameLoop {
         guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
-        NewDisplayManager.closeDisplay();
+        DisplayManager.closeDisplay();
         source.delete();
         AudioMaster.cleanUp();
 

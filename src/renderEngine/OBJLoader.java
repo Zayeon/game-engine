@@ -1,7 +1,7 @@
 package renderEngine;
 
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.models.RawModel;
 
 import java.io.BufferedReader;

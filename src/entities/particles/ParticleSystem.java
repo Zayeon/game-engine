@@ -1,9 +1,9 @@
 package entities.particles;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
-import renderEngine.NewDisplayManager;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+import renderEngine.DisplayManager;
 
 import java.util.Random;
 
@@ -67,7 +67,7 @@ public class ParticleSystem {
     }
 
     public void generateParticles(Vector3f systemCenter) {
-        float delta = NewDisplayManager.getFrameTimeSeconds();
+        float delta = DisplayManager.getFrameTimeSeconds();
         float particlesToCreate = pps * delta;
         int count = (int) Math.floor(particlesToCreate);
         float partialParticle = particlesToCreate % 1;
@@ -80,13 +80,14 @@ public class ParticleSystem {
     }
 
     private void emitParticle(Vector3f center) {
-        Vector3f velocity;
+        Vector3f velocity = null;
         if(direction!=null){
             velocity = generateRandomUnitVectorWithinCone(direction, directionDeviation);
         }else{
             velocity = generateRandomUnitVector();
         }
-        velocity.normalize(generateValue(averageSpeed, speedError));
+        velocity.normalise();
+        velocity.scale(generateValue(averageSpeed, speedError));
         float scale = generateValue(averageScale, scaleError);
         float lifeLength = generateValue(averageLifeLength, lifeError);
         new Particle(new Vector3f(center), velocity, gravityComplient, lifeLength, generateRotation(), scale, texture);
@@ -116,17 +117,16 @@ public class ParticleSystem {
 
         Vector4f direction = new Vector4f(x, y, z, 1);
         if (coneDirection.x != 0 || coneDirection.y != 0 || (coneDirection.z != 1 && coneDirection.z != -1)) {
-            Vector3f rotateAxis = new Vector3f();
-            coneDirection.cross(new Vector3f(0, 0, 1), rotateAxis);
-            rotateAxis.normalize();
-            float rotateAngle = (float) Math.acos(coneDirection.dot(new Vector3f(0, 0, 1)));
+            Vector3f rotateAxis = Vector3f.cross(coneDirection, new Vector3f(0, 0, 1), null);
+            rotateAxis.normalise();
+            float rotateAngle = (float) Math.acos(Vector3f.dot(coneDirection, new Vector3f(0, 0, 1)));
             Matrix4f rotationMatrix = new Matrix4f();
-            rotationMatrix.rotate(-rotateAngle, rotateAxis)
-            .transform(direction, direction);
+            rotationMatrix.rotate(-rotateAngle, rotateAxis);
+            Matrix4f.transform(rotationMatrix, direction, direction);
         } else if (coneDirection.z == -1) {
             direction.z *= -1;
         }
-        return new Vector3f(direction.x, direction.y, direction.z);
+        return new Vector3f(direction);
     }
 
     private Vector3f generateRandomUnitVector() {

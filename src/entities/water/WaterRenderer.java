@@ -2,14 +2,14 @@ package entities.water;
 
 import entities.Camera;
 import entities.Light;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.NewDisplayManager;
 import renderEngine.models.RawModel;
 import toolbox.Maths;
 
@@ -57,7 +57,7 @@ public class WaterRenderer {
 	private void prepareRender(Camera camera, Light sun){
 		shader.start();
 		shader.loadViewMatrix(camera);
-		moveFactor += WAVE_SPEED * NewDisplayManager.getFrameTimeSeconds();
+		moveFactor += WAVE_SPEED * DisplayManager.getFrameTimeSeconds();
 		moveFactor %= 1f;
 		shader.loadMoveFactor(moveFactor);
 		shader.loadLights(sun);

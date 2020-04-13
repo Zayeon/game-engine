@@ -1,6 +1,6 @@
 package entities.particles;
 
-import org.joml.Matrix4f;
+import org.lwjgl.util.vector.Matrix4f;
 import renderEngine.shaders.ShaderProgram;
 
 public class ParticleShader extends ShaderProgram {
