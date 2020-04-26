@@ -1,8 +1,8 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 /**
  * Simple data structure class holding information about a certain glyph in the
- * font texture atlas. All sizes are for a font-size of 1.
+ * guis.font texture atlas. All sizes are for a guis.font-size of 1.
  * 
  * @author Karl
  *

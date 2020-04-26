@@ -1,6 +1,6 @@
 package guis;
 
-import org.lwjgl.util.vector.Vector2f;
+import maths.Vector2f;
 
 public class GuiTexture {
 

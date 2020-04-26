@@ -1,10 +1,10 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 import java.io.File;
 
 /**
- * Represents a font. It holds the font's texture atlas as well as having the
- * ability to create the quad vertices for any text using this font.
+ * Represents a guis.font. It holds the guis.font's texture atlas as well as having the
+ * ability to create the quad vertices for any text using this guis.font.
  * 
  * @author Karl
  *
@@ -15,13 +15,13 @@ public class FontType {
 	private TextMeshCreator loader;
 
 	/**
-	 * Creates a new font and loads up the data about each character from the
-	 * font file.
+	 * Creates a new guis.font and loads up the data about each character from the
+	 * guis.font file.
 	 * 
 	 * @param textureAtlas
-	 *            - the ID of the font atlas texture.
+	 *            - the ID of the guis.font atlas texture.
 	 * @param fontFile
-	 *            - the font file containing information about each character in
+	 *            - the guis.font file containing information about each character in
 	 *            the texture atlas.
 	 */
 	public FontType(int textureAtlas, File fontFile) {
@@ -30,7 +30,7 @@ public class FontType {
 	}
 
 	/**
-	 * @return The font texture atlas.
+	 * @return The guis.font texture atlas.
 	 */
 	public int getTextureAtlas() {
 		return textureAtlas;
@@ -39,7 +39,7 @@ public class FontType {
 	/**
 	 * Takes in an unloaded text and calculate all of the vertices for the quads
 	 * on which this text will be rendered. The vertex positions and texture
-	 * coords and calculated based on the information from the font file.
+	 * coords and calculated based on the information from the guis.font file.
 	 * 
 	 * @param text
 	 *            - the unloaded text.

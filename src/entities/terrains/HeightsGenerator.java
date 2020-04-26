@@ -1,18 +1,26 @@
 package entities.terrains;
 
+import renderEngine.TextureData;
+
 import java.util.Random;
 
-public class HeightsGenerator {
-    private static final float AMPLITUDE = 20f;
 
-    private static final int OCTAVES = 3;
-    private static final float ROUGHNESS = 0.1f;
+public class HeightsGenerator {
+    // Keep at 1 since we pre-generate noise using perlin noise
+    private static final float AMPLITUDE = 40f;
+    private static final int OCTAVES = 5;
+    private static final float ROUGHNESS = 0.001f;
+
+    private TextureData heightMap;
+    private byte[] noiseArray;
 
     private Random random = new Random();
     private int seed;
 
-    public HeightsGenerator(){
-        this.seed = random.nextInt(1000000000);
+    public HeightsGenerator(TextureData heightTexture){
+        heightMap = heightTexture;
+        noiseArray = new byte[heightMap.getBuffer().capacity()];
+        heightMap.getBuffer().get(noiseArray, 0, noiseArray.length);
     }
 
     public float generateHeight(int x, int z) {

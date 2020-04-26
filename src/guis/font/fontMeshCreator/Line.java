@@ -1,4 +1,4 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Line {
 	 * @param spaceWidth
 	 *            - the screen-space width of a space character.
 	 * @param fontSize
-	 *            - the size of font being used.
+	 *            - the size of guis.font being used.
 	 * @param maxLength
 	 *            - the screen-space maximum length of a line.
 	 */

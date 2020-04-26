@@ -1,12 +1,12 @@
-package shadows;
+package renderEngine.shadows;
 
-import org.joml.Matrix4f;
+import maths.Matrix4f;
 import renderEngine.shaders.ShaderProgram;
 
 public class ShadowShader extends ShaderProgram {
 	
-	private static final String VERTEX_FILE = "src/shadows/shadowVertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/shadows/shadowFragmentShader.txt";
+	private static final String VERTEX_FILE = "src/renderEngine/shadows/shadowVertexShader.txt";
+	private static final String FRAGMENT_FILE = "src/renderEngine/shadows/shadowFragmentShader.txt";
 	
 	private int location_mvpMatrix;
 

@@ -2,10 +2,10 @@ package renderEngine.shaders;
 
 import entities.Camera;
 import entities.Light;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import maths.Matrix4f;
+import maths.Vector2f;
+import maths.Vector3f;
+import maths.Vector4f;
 import toolbox.Maths;
 
 import java.util.List;

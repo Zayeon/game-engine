@@ -1,9 +1,9 @@
 package entities.particles;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-import renderEngine.DisplayManager;
+import maths.Matrix4f;
+import maths.Vector3f;
+import maths.Vector4f;
+import renderEngine.NewDisplayManager;
 
 import java.util.Random;
 
@@ -67,7 +67,7 @@ public class ParticleSystem {
     }
 
     public void generateParticles(Vector3f systemCenter) {
-        float delta = DisplayManager.getFrameTimeSeconds();
+        float delta = NewDisplayManager.getFrameTimeSeconds();
         float particlesToCreate = pps * delta;
         int count = (int) Math.floor(particlesToCreate);
         float partialParticle = particlesToCreate % 1;
@@ -117,12 +117,12 @@ public class ParticleSystem {
 
         Vector4f direction = new Vector4f(x, y, z, 1);
         if (coneDirection.x != 0 || coneDirection.y != 0 || (coneDirection.z != 1 && coneDirection.z != -1)) {
-            Vector3f rotateAxis = Vector3f.cross(coneDirection, new Vector3f(0, 0, 1), null);
+            Vector3f rotateAxis = Vector3f.cross(coneDirection, new Vector3f(0, 0, 1));
             rotateAxis.normalise();
             float rotateAngle = (float) Math.acos(Vector3f.dot(coneDirection, new Vector3f(0, 0, 1)));
             Matrix4f rotationMatrix = new Matrix4f();
             rotationMatrix.rotate(-rotateAngle, rotateAxis);
-            Matrix4f.transform(rotationMatrix, direction, direction);
+            direction = rotationMatrix.transform(direction);
         } else if (coneDirection.z == -1) {
             direction.z *= -1;
         }

@@ -1,8 +1,8 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
-import font.fontRendering.TextMaster;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import guis.font.fontRendering.TextMaster;
+import maths.Vector2f;
+import maths.Vector3f;
 
 /**
  * Represents a piece of text in the game.

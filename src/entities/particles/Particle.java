@@ -3,9 +3,9 @@ package entities.particles;
 
 import entities.Camera;
 import entities.Player;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import renderEngine.DisplayManager;
+import maths.Vector2f;
+import maths.Vector3f;
+import renderEngine.NewDisplayManager;
 
 public class Particle {
 
@@ -69,13 +69,13 @@ public class Particle {
     }
 
     public boolean update(Camera camera){
-        velocity.y -= Player.GRAVITY * gravityEffect * DisplayManager.getFrameTimeSeconds();
+        velocity.y -= Player.GRAVITY * gravityEffect * NewDisplayManager.getFrameTimeSeconds();
         Vector3f change = new Vector3f(velocity);
-        change.scale(DisplayManager.getFrameTimeSeconds());
+        change.scale(NewDisplayManager.getFrameTimeSeconds());
         Vector3f.add(change, position, position);
-        distance = Vector3f.sub(camera.getPosition(), position, null).lengthSquared();
+        distance = Vector3f.sub(camera.getPosition(), position).lengthSquared();
         updateTextureCoordInfo();
-        elapsedTime += DisplayManager.getFrameTimeSeconds();
+        elapsedTime += NewDisplayManager.getFrameTimeSeconds();
         return elapsedTime < lifeLength;
     }
 

@@ -1,4 +1,4 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 import java.io.File;
 import java.util.ArrayList;

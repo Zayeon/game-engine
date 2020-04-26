@@ -1,11 +1,11 @@
-package shadows;
+package renderEngine.shadows;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import maths.Matrix4f;
+import maths.Vector2f;
+import maths.Vector3f;
 import org.lwjgl.opengl.GL11;
 import renderEngine.models.TexturedModel;
 
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class ShadowMapMasterRenderer {
 
-	private static final int SHADOW_MAP_SIZE = 4096        ;
+	private static final int SHADOW_MAP_SIZE = 8192        ;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -86,7 +86,7 @@ public class ShadowMapMasterRenderer {
 	 * @return The to-shadow-map-space matrix.
 	 */
 	public Matrix4f getToShadowMapSpaceMatrix() {
-		return offset.mul( projectionViewMatrix);
+		return Matrix4f.mul(offset, projectionViewMatrix);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class ShadowMapMasterRenderer {
 	private void prepare(Vector3f lightDirection, ShadowBox box) {
 		updateOrthoProjectionMatrix(box.getWidth(), box.getHeight(), box.getLength());
 		updateLightViewMatrix(lightDirection, box.getCenter());
-		projectionMatrix.mul(lightViewMatrix, projectionViewMatrix);
+		Matrix4f.mul(projectionMatrix, lightViewMatrix, projectionViewMatrix);
 		shadowFbo.bindFrameBuffer();
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
@@ -168,15 +168,15 @@ public class ShadowMapMasterRenderer {
 	 *            - the center of the "view cuboid" in world space.
 	 */
 	private void updateLightViewMatrix(Vector3f direction, Vector3f center) {
-		direction.normalize();
+		direction.normalise();
 		center.negate();
-		lightViewMatrix.identity();
+		lightViewMatrix.setIdentity();
 		float pitch = (float) Math.acos(new Vector2f(direction.x, direction.z).length());
-		lightViewMatrix.rotate(pitch, new Vector3f(1, 0, 0), lightViewMatrix);
+		lightViewMatrix.rotate(pitch, new Vector3f(1, 0, 0));
 		float yaw = (float) Math.toDegrees(((float) Math.atan(direction.x / direction.z)));
 		yaw = direction.z > 0 ? yaw - 180 : yaw;
-		lightViewMatrix.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0), lightViewMatrix);
-		lightViewMatrix.translate(center, lightViewMatrix);
+		lightViewMatrix.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0));
+		lightViewMatrix.translate(center);
 	}
 
 	/**
@@ -192,11 +192,11 @@ public class ShadowMapMasterRenderer {
 	 *            - shadow box length.
 	 */
 	private void updateOrthoProjectionMatrix(float width, float height, float length) {
-		projectionMatrix.identity();
-		projectionMatrix.m00(2f / width);
-		projectionMatrix.m11(2f / height);
-		projectionMatrix.m22(-2f / length);
-		projectionMatrix.m33(1);
+		projectionMatrix.setIdentity();
+		projectionMatrix.m00 = 2f / width;
+		projectionMatrix.m11 = 2f / height;
+		projectionMatrix.m22 = -2f / length;
+		projectionMatrix.m33 = 1;
 	}
 
 	/**

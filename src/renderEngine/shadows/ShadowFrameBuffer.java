@@ -1,4 +1,4 @@
-package shadows;
+package renderEngine.shadows;
 
 import org.lwjgl.opengl.*;
 import renderEngine.NewDisplayManager;

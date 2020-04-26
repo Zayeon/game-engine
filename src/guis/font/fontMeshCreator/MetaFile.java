@@ -1,4 +1,4 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 import renderEngine.NewDisplayManager;
 

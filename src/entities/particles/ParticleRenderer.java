@@ -1,10 +1,10 @@
 package entities.particles;
 
 import entities.Camera;
+import maths.Matrix4f;
+import maths.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
 import toolbox.Maths;
@@ -82,7 +82,7 @@ public class ParticleRenderer {
 
 	private void updateModelViewMatrix(Vector3f position, float rotation, float scale, Matrix4f viewMatrix, float[] vboData){
 	    Matrix4f modelMatrix = new Matrix4f();
-	    Matrix4f.translate(position, modelMatrix, modelMatrix);
+        modelMatrix.translate(position);
 
 	    // Sets the rotation 3x3 part of the model matrix to the transpose of the 3x3 rotation part of the view matrix
         // The rotation in the model matrix will now cancel out the rotation in the view matrix, meaning that no rotation is applied to the particle
@@ -96,9 +96,9 @@ public class ParticleRenderer {
         modelMatrix.m21 = viewMatrix.m12;
         modelMatrix.m22 = viewMatrix.m22;
 
-        Matrix4f.rotate((float) Math.toRadians(rotation), new Vector3f(0, 0, 1), modelMatrix, modelMatrix);
-        Matrix4f.scale(new Vector3f(scale, scale, scale), modelMatrix, modelMatrix);
-        Matrix4f modelViewMatrix = Matrix4f.mul(viewMatrix, modelMatrix, null);
+        modelMatrix.rotate((float) Math.toRadians(rotation), new Vector3f(0, 0, 1));
+        modelMatrix.scale(new Vector3f(scale, scale, scale));
+        Matrix4f modelViewMatrix = Matrix4f.mul(viewMatrix, modelMatrix);
         storeMatrixData(modelViewMatrix, vboData);
     }
 

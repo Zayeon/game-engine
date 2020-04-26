@@ -1,7 +1,7 @@
 package entities.terrains;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import maths.Vector2f;
+import maths.Vector3f;
 import renderEngine.Loader;
 import renderEngine.TextureData;
 import renderEngine.models.RawModel;

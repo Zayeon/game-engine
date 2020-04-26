@@ -110,16 +110,16 @@ public class Loader {
 
 	
 	public void cleanUp() {
-		for (int vao:vaos) {
-			GL30.glDeleteVertexArrays(vao);
-		}
-		for (int vbo:vbos) {
-			GL15.glDeleteBuffers(vbo);
-		}
-		for (int texture:textures){
-		    GL11.glDeleteTextures(texture);
+        for (int vao : vaos) {
+            GL30.glDeleteVertexArrays(vao);
         }
-	}
+        for (int vbo : vbos) {
+            GL15.glDeleteBuffers(vbo);
+        }
+        for (int texture : textures) {
+            GL11.glDeleteTextures(texture);
+        }
+    }
 
 	private int loadGenericTexture(String filePath){
 
@@ -144,7 +144,7 @@ public class Loader {
         return textureID;
     }
 
-	private TextureData decodeTextureFile(String fileName) {
+	public TextureData decodeTextureFile(String fileName) {
 		int width = 0;
 		int height = 0;
 		ByteBuffer buffer = null;

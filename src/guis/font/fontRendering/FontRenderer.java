@@ -1,7 +1,7 @@
-package font.fontRendering;
+package guis.font.fontRendering;
 
-import font.fontMeshCreator.FontType;
-import font.fontMeshCreator.GUIText;
+import guis.font.fontMeshCreator.FontType;
+import guis.font.fontMeshCreator.GUIText;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;

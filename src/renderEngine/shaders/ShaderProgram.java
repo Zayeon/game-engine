@@ -1,18 +1,17 @@
 package renderEngine.shaders;
 
+import maths.Matrix4f;
+import maths.Vector2f;
+import maths.Vector3f;
+import maths.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
+import java.util.Scanner;
 
 public abstract class ShaderProgram {
 
@@ -68,7 +67,7 @@ public abstract class ShaderProgram {
     protected void loadMatrix(int location, Matrix4f matrix){
         matrix.store(matrixBuffer);
         matrixBuffer.flip();
-        GL20.glUniformMatrix4(location, false, matrixBuffer);
+        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
     }
 
     public void start(){
@@ -94,14 +93,15 @@ public abstract class ShaderProgram {
         GL20.glBindAttribLocation(programID, attribute, variableName);
     }
 
-    private static int loadShader(String file, int type){
+    private static int loadShader(String filepath, int type){
         StringBuilder shaderSource = new StringBuilder();
         try{
-            InputStream in = Class.class.getResourceAsStream(file);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            File shaderFile = new File(filepath);
+            Scanner reader = new Scanner(shaderFile);
             String line;
-            while((line = reader.readLine())!=null){
-                shaderSource.append(line).append("//\n");
+            while(reader.hasNextLine()){
+                line = reader.nextLine();
+                shaderSource.append(line).append("\n");
             }
             reader.close();
         }catch(IOException e){

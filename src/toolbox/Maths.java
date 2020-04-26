@@ -1,19 +1,19 @@
 package toolbox;
 
 import entities.Camera;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import maths.Matrix4f;
+import maths.Vector2f;
+import maths.Vector3f;
 
 public class Maths {
     public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale){
         Matrix4f matrix = new Matrix4f();
         //matrix.identity();
-        matrix.translate(translation)
-        .rotate((float) Math.toRadians(rx), new Vector3f(1,0,0))
-        .rotate((float) Math.toRadians(ry), new Vector3f(0,1,0))
-        .rotate((float) Math.toRadians(rz), new Vector3f(0,0,1))
-        .scale(scale);
+        matrix.translate(translation);
+        matrix.rotate((float) Math.toRadians(rx), new Vector3f(1,0,0));
+        matrix.rotate((float) Math.toRadians(ry), new Vector3f(0,1,0));
+        matrix.rotate((float) Math.toRadians(rz), new Vector3f(0,0,1));
+        matrix.scale(new Vector3f(scale));
 
         return matrix;
     }
@@ -21,8 +21,8 @@ public class Maths {
     public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale) {
         Matrix4f matrix = new Matrix4f();
         //matrix.identity();
-        matrix.translate(new Vector3f(translation, 0))
-        .scale(new Vector3f(scale.x, scale.y, 1f));
+        matrix.translate(new Vector3f(translation.x, translation.y, 0));
+        matrix.scale(new Vector3f(scale.x, scale.y, 1f));
         return matrix;
     }
 
@@ -30,11 +30,10 @@ public class Maths {
         Matrix4f viewMatrix = new Matrix4f();
         //viewMatrix.identity();
         Vector3f cameraPos = camera.getPosition();
-        Vector3f negativeCameraPos = new Vector3f();
-        cameraPos.mul(-1f, negativeCameraPos);
-        viewMatrix.rotate((float) Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0))
-        .rotate((float) Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0))
-        .translate(negativeCameraPos);
+        Vector3f negativeCameraPos = new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+        viewMatrix.rotate((float) Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0));
+        viewMatrix.rotate((float) Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0));
+        viewMatrix.translate(negativeCameraPos);
         return viewMatrix;
     }
 
@@ -48,11 +47,10 @@ public class Maths {
 
     public static Vector3f linearlyInterpolate(Vector3f a, Vector3f b, float factor){
         // (1-f)a + fb
-        Vector3f partA = new Vector3f();
-        a.mul(1-factor, partA);
-        Vector3f partB = new Vector3f();
-        b.mul(factor, partB);
-        partA.add(partB);
-        return new Vector3f(partA.x, partA.y, partA.z);
+        Vector3f partA = new Vector3f(a);
+        partA.scale(1-factor);
+        Vector3f partB = new Vector3f(b);
+        partB.scale(factor);
+        return Vector3f.add(partA, partB);
     }
 }

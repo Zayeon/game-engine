@@ -1,4 +1,4 @@
-package font.fontMeshCreator;
+package guis.font.fontMeshCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Word {
 	
 	/**
 	 * Create a new empty word.
-	 * @param fontSize - the font size of the text which this word is in.
+	 * @param fontSize - the guis.font size of the text which this word is in.
 	 */
 	protected Word(double fontSize){
 		this.fontSize = fontSize;

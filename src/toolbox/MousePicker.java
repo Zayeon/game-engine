@@ -2,12 +2,11 @@ package toolbox;
 
 import entities.Camera;
 import entities.terrains.Terrain;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import maths.Matrix4f;
+import maths.Vector2f;
+import maths.Vector3f;
+import maths.Vector4f;
+import renderEngine.NewDisplayManager;
 
 public class MousePicker {
 
@@ -43,7 +42,7 @@ public class MousePicker {
 
 
             Vector3f scaledDirection = new Vector3f(currentRay.x * attempt, currentRay.y * attempt, currentRay.z * attempt);
-            Vector3f nextCheck = Vector3f.add(cameraPos, scaledDirection, null); // ;
+            Vector3f nextCheck = Vector3f.add(cameraPos, scaledDirection); // ;
 
             // Checking if nextCheck is close enough to the real value to satisfy TERRAIN_COLLISION_PRECISION
             if (Math.abs(terrain.getHeightOfTerrain(nextCheck.x, nextCheck.z) - nextCheck.y) < 1){
@@ -54,7 +53,7 @@ public class MousePicker {
             // checking if the nextCheck has gone past the point of intersection
             if (nextCheck.y < terrain.getHeightOfTerrain(nextCheck.x, nextCheck.z) == isCameraAboveTerrain){
                 // we need to now perform a binary search with previous_nextCheck and nextCheck as bounds and we are looking for a point with the correct precision
-                Vector3f previousCheck = Vector3f.add(cameraPos, new Vector3f(currentRay.x * attempt -1, currentRay.y * attempt - 1, currentRay.z * attempt -1), null); // ;
+                Vector3f previousCheck = Vector3f.add(cameraPos, new Vector3f(currentRay.x * attempt -1, currentRay.y * attempt - 1, currentRay.z * attempt -1)); // ;
                 float factor = 0.5f; // how much to linearly interpolate by
                 Vector3f midpoint = nextCheck;
                 while(Math.abs(terrain.getHeightOfTerrain(midpoint.x, midpoint.z) - nextCheck.y) < 1){
@@ -72,10 +71,9 @@ public class MousePicker {
     }
 
     private Vector3f calculateMouseRay(){
-        float mouseX = Mouse.getX();
-        float mouseY = Mouse.getY();
+        Vector2f mouseXY = NewDisplayManager.getMousePos();
         //http://antongerdelan.net/opengl/raycasting.html
-        Vector2f normalisedCoords = getNormalisedDeviceCoords(mouseX, mouseY);
+        Vector2f normalisedCoords = getNormalisedDeviceCoords(mouseXY.x, mouseXY.y);
         Vector4f clipCoords = new Vector4f(normalisedCoords.x, normalisedCoords.y, -1f, 1f);
         Vector4f eyeCoords = toEyeCoords(clipCoords);
         Vector3f worldRay = toWorldsCoords(eyeCoords);
@@ -83,21 +81,21 @@ public class MousePicker {
     }
 
     private Vector2f getNormalisedDeviceCoords(float mouse_x, float mouse_y){ // converts 1920x1080 to -1x1
-        float x = (2f * mouse_x) / Display.getWidth() - 1f;
-        float y = (2f * mouse_y) / Display.getHeight() - 1f;
+        float x = (2f * mouse_x) / NewDisplayManager.WIDTH - 1f;
+        float y = (2f * mouse_y) / NewDisplayManager.HEIGHT - 1f;
 
         return new Vector2f(x, y);
     }
 
     private Vector4f toEyeCoords(Vector4f clipCoords){
-        Matrix4f invertedProjection = Matrix4f.invert(projectionMatrix, null);
-        Vector4f eyeCoords = Matrix4f.transform(invertedProjection, clipCoords, null);
+        Matrix4f invertedProjection = projectionMatrix.inverse();
+        Vector4f eyeCoords = invertedProjection.transform(clipCoords);
         return new Vector4f(eyeCoords.x, eyeCoords.y, -1f, 0f);
     }
 
     private Vector3f toWorldsCoords(Vector4f eyeCoords){
-        Matrix4f invertedView = Matrix4f.invert(viewMatrix, null);
-        Vector4f rayWorld = Matrix4f.transform(invertedView, eyeCoords, null);
+        Matrix4f invertedView = viewMatrix.inverse();
+        Vector4f rayWorld = invertedView.transform(eyeCoords);
         Vector3f mouseRay = new Vector3f(rayWorld.x, rayWorld.y, rayWorld.z);
         mouseRay.normalise();
         return mouseRay;

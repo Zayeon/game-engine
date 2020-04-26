@@ -1,8 +1,8 @@
-package font.fontRendering;
+package guis.font.fontRendering;
 
-import font.fontMeshCreator.FontType;
-import font.fontMeshCreator.GUIText;
-import font.fontMeshCreator.TextMeshData;
+import guis.font.fontMeshCreator.FontType;
+import guis.font.fontMeshCreator.GUIText;
+import guis.font.fontMeshCreator.TextMeshData;
 import renderEngine.Loader;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package engineTester;
 
 import audio.AudioMaster;
-import audio.Source;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -16,19 +15,17 @@ import entities.water.WaterFrameBuffers;
 import entities.water.WaterRenderer;
 import entities.water.WaterShader;
 import entities.water.WaterTile;
-import font.fontMeshCreator.FontType;
-import font.fontRendering.TextMaster;
 import guis.GuiRenderer;
 import guis.GuiTexture;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
+import guis.font.fontMeshCreator.FontType;
+import guis.font.fontRendering.TextMaster;
+import maths.Vector3f;
+import maths.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
+import renderEngine.NewDisplayManager;
 import renderEngine.OBJLoader;
 import renderEngine.models.ModelTexture;
 import renderEngine.models.TexturedModel;
@@ -44,21 +41,21 @@ public class MainGameLoop {
 
 	public static void main(String[] args) {
 
-		DisplayManager.createDisplay();
+		NewDisplayManager.createDisplay();
 		Loader loader = new Loader();
         Random random = new Random(12345);
 
         //*****AUDIO*****
 
-        AudioMaster.init();
-        AudioMaster.setListenerData(0 ,0, 0);
-        //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
-
-        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.wav");
-        Source source = new Source();
-
-        float xPos = 0;
-        source.setPosition(xPos, 0, 0);
+//        AudioMaster.init();
+//        AudioMaster.setListenerData(0 ,0, 0);
+//        //AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
+//
+//        int bounceSound = AudioMaster.loadSound("res/sounds/bounce.wav");
+//        Source source = new Source();
+//
+//        float xPos = 0;
+//        source.setPosition(xPos, 0, 0);
 
         //***************
 
@@ -139,11 +136,14 @@ public class MainGameLoop {
         entities.add(new Entity(tree2Model, new Vector3f(191, -2.7f, -58f), 0, 0 ,0, 1));
         entities.add(new Entity(tree2Model, new Vector3f(121, -2.7f, -34), 0, 0 ,0,1));
 
+        Entity lamp = new Entity(lampModel, new Vector3f(0, 10, 0), 0, 0, 0, 1);
+        entities.add(lamp);
+
         //**********************
 
         //*****PLAYER STUFF*****
 
-        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.4f);
+        Player player = new Player(playerModel, new Vector3f(0, 0, -25), 0, 0, 0, 1f);
         Camera camera = new Camera(player);
 
         player.setPosition(new Vector3f(100, 0, -100));
@@ -217,16 +217,20 @@ public class MainGameLoop {
 
         //*******************
 
+        Vector3f a = new Vector3f(10, 10, 10);
+        a.scale(0.5f);
+        System.out.println(Float.toString(a.x) + Float.toString(a.y) + Float.toString(a.z));
 
 
 
         //*****Game Loop*****
 
-        while(!Display.isCloseRequested()){
+        while(!NewDisplayManager.isCloseRequested()){
             camera.move();
             picker.update();
             player.move(terrains.get(0));
             ParticleMaster.update(camera);
+
 
             GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 
@@ -261,11 +265,11 @@ public class MainGameLoop {
             guiRenderer.render(guis);
             TextMaster.render();
 
-            if (Keyboard.isKeyDown(Keyboard.KEY_Y)){
-                source.play(bounceSound);
-            }
+//            if (NewDisplayManager.isKeyDown(GLFW.GLFW_KEY_Y)){
+//                source.play(bounceSound);
+//            }
 
-            DisplayManager.updateDisplay();
+            NewDisplayManager.updateDisplay();
             dayTracker.tick();
         }
 
@@ -281,8 +285,8 @@ public class MainGameLoop {
         guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
-        DisplayManager.closeDisplay();
-        source.delete();
+        NewDisplayManager.closeDisplay();
+//        source.delete();
         AudioMaster.cleanUp();
 
         //*******************
